@@ -38,6 +38,12 @@ abstract class HelloWorldHelper
 			$submenu == 'categories'
 		);
 
+		if (JFolder::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields'))
+		{
+			// On Joomla 3.3 and above use JHtmlSidebar
+			JSubMenuHelper::addEntry(JText::_('Fields'), 'index.php?option=com_dpfields&context=com_helloworld.helloworld', $submenu == 'fields.helloworld');
+		}
+
 		// set some global property
 		$document = JFactory::getDocument();
 		$document->addStyleDeclaration('.icon-48-helloworld ' .
