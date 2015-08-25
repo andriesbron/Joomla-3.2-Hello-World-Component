@@ -37,6 +37,30 @@ class HelloWorldViewHelloWorld extends JViewLegacy
 			return false;
 		}
 
+		$params = JFactory::getApplication()->getParams();
+
+		JPluginHelper::importPlugin('content');
+		$dispatcher = JEventDispatcher::getInstance();
+		$this->displayEvent = new stdClass();
+
+		$dispatcher->trigger('onContentPrepare', array ('com_helloworld.helloworld', &$this->item, &$params, 0));
+
+		$results = $dispatcher->trigger('onContentBeforeDisplay', array(
+				'com_helloworld.helloworld',
+				&$this->item,
+				&$params,
+				0
+		));
+		$this->displayEvent->beforeDisplayContent = trim(implode("\n", $results));
+
+		$results = $dispatcher->trigger('onContentAfterDisplay', array(
+				'com_helloworld.helloworld',
+				&$this->item,
+				&$params,
+				0
+		));
+		$this->displayEvent->afterDisplayContent = trim(implode("\n", $results));
+
 		// Display the view
 		parent::display($tpl);
 	}

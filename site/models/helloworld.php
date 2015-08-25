@@ -73,7 +73,7 @@ class HelloWorldModelHelloWorld extends JModelItem
 			$id    = $this->getState('message.id');
 			$db    = JFactory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('h.greeting, h.params, c.title as category')
+			$query->select('h.id, h.greeting, h.params, c.title as category')
 				  ->from('#__helloworld as h')
 				  ->leftJoin('#__categories as c ON h.catid=c.id')
 				  ->where('h.id=' . (int)$id);
